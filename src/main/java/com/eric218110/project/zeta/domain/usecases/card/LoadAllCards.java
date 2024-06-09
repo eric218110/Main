@@ -2,8 +2,8 @@ package com.eric218110.project.zeta.domain.usecases.card;
 
 import java.util.List;
 
-import com.eric218110.project.zeta.domain.model.card.CardModel;
+import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
 
 public interface LoadAllCards {
-  List<CardModel> listAll();
+    List<ShowCardDto> listAll();
 }

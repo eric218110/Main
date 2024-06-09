@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "redhat.java",
+        "streetsidesoftware.code-spell-checker",
+        "shardulm94.trailing-spaces",
+        "vscjava.vscode-java-pack",
+        "sonarsource.sonarlint-vscode",
+        "editorconfig.editorconfig"
+    ]
+}

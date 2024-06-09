@@ -15,8 +15,8 @@ import org.modelmapper.ModelMapper;
 
 import com.eric218110.project.zeta.data.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.dto.card.AddCardDto;
+import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
 import com.eric218110.project.zeta.domain.enums.cardtype.CardTypesEnum;
-import com.eric218110.project.zeta.domain.model.card.CardModel;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
 import com.github.javafaker.Faker;
 
@@ -42,7 +42,7 @@ class CardServiceTests {
     List<CardEntity> cardEntities = loadFakeCardEntities();
     when(this.cardRepository.findAll()).thenReturn(cardEntities);
 
-    List<CardModel> result = cardService.listAll();
+    List<ShowCardDto> result = cardService.listAll();
 
     assertEquals(2, result.size());
   }
@@ -51,7 +51,7 @@ class CardServiceTests {
   void listAllReturnsZeroWhenNotFindData() {
     when(this.cardRepository.findAll()).thenReturn(List.of());
 
-    List<CardModel> result = cardService.listAll();
+    List<ShowCardDto> result = cardService.listAll();
 
     assertEquals(0, result.size());
   }
@@ -61,7 +61,7 @@ class CardServiceTests {
     CardEntity cardEntityFaker = this.loadFakeCardEntity();
     when(this.cardRepository.save(any(CardEntity.class))).thenReturn(cardEntityFaker);
 
-    CardModel result = this.cardService.addCard(this.loadAddCardDto());
+    ShowCardDto result = this.cardService.addCard(this.loadAddCardDto());
 
     assertEquals(cardEntityFaker.getName(), result.getName());
   }
