@@ -1,11 +1,11 @@
-package com.eric218110.project.zeta.domain.dto.card;
+package com.eric218110.project.zeta.domain.http.card;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ShowCardDto {
+public class ShowCardResponse {
   private String uuid;
   private String name;
   private String color;

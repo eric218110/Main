@@ -1,4 +1,4 @@
-package com.eric218110.project.zeta.domain.dto.card;
+package com.eric218110.project.zeta.domain.http.card;
 
 import com.eric218110.project.zeta.domain.enums.cardtype.CardTypesEnum;
 import com.eric218110.project.zeta.validators.enums.CardTypeValidatorEnum;
@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AddCardDto {
+public class AddCardRequest {
   @NotBlank(message = "Field name is required")
   String name;
 

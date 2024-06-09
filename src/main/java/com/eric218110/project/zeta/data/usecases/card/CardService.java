@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.eric218110.project.zeta.data.entities.card.CardEntity;
-import com.eric218110.project.zeta.domain.dto.card.AddCardDto;
-import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
+import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
+import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.domain.usecases.card.AddOneCard;
 import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
@@ -22,14 +22,14 @@ public class CardService implements LoadAllCards, AddOneCard {
     private final CardRepository cardRepository;
 
     @Override
-    public List<ShowCardDto> listAll() {
+    public List<ShowCardResponse> listAll() {
         List<CardEntity> cardEntities = this.cardRepository.findAll();
 
         return cardEntities.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public ShowCardDto addCard(AddCardDto addCardDto) {
+    public ShowCardResponse addCard(AddCardRequest addCardDto) {
         try {
             CardEntity cardEntity = this.addCardDtoToCardEntity(addCardDto);
 
@@ -41,7 +41,7 @@ public class CardService implements LoadAllCards, AddOneCard {
         }
     }
 
-    private CardEntity addCardDtoToCardEntity(AddCardDto addCardDto) {
+    private CardEntity addCardDtoToCardEntity(AddCardRequest addCardDto) {
         return CardEntity.builder()
                 .name(addCardDto.getName())
                 .color(addCardDto.getColor())
@@ -53,8 +53,8 @@ public class CardService implements LoadAllCards, AddOneCard {
                 .build();
     }
 
-    private ShowCardDto entityToDto(CardEntity cardEntity) {
-        return ShowCardDto.builder()
+    private ShowCardResponse entityToDto(CardEntity cardEntity) {
+        return ShowCardResponse.builder()
                 .uuid(cardEntity.getUuid())
                 .name(cardEntity.getName())
                 .color(cardEntity.getColor())

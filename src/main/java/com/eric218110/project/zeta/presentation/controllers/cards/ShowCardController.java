@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
+import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
 
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ShowCardController {
 
-  final LoadAllCards loadAllCards;
+    final LoadAllCards loadAllCards;
 
-  @GetMapping("show")
-  public ResponseEntity<List<ShowCardDto>> show() {
-    List<ShowCardDto> listCards = this.loadAllCards.listAll();
+    @GetMapping("show")
+    public ResponseEntity<List<ShowCardResponse>> show() {
+        List<ShowCardResponse> listCards = this.loadAllCards.listAll();
 
-    return ResponseEntity.ok(listCards);
-  }
+        return ResponseEntity.ok(listCards);
+    }
 
 }

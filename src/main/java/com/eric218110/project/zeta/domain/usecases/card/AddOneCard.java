@@ -1,8 +1,8 @@
 package com.eric218110.project.zeta.domain.usecases.card;
 
-import com.eric218110.project.zeta.domain.dto.card.AddCardDto;
-import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
+import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
+import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 
 public interface AddOneCard {
-    ShowCardDto addCard(AddCardDto addCardDto);
+    ShowCardResponse addCard(AddCardRequest addCardDto);
 }

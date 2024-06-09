@@ -13,86 +13,86 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.eric218110.project.zeta.data.entities.card.CardEntity;
-import com.eric218110.project.zeta.domain.dto.card.AddCardDto;
-import com.eric218110.project.zeta.domain.dto.card.ShowCardDto;
 import com.eric218110.project.zeta.domain.enums.cardtype.CardTypesEnum;
+import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
+import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
 import com.github.javafaker.Faker;
 
 class CardServiceTests {
 
-  private Faker faker = new Faker();
+    private Faker faker = new Faker();
 
-  @Mock
-  private CardRepository cardRepository;
+    @Mock
+    private CardRepository cardRepository;
 
-  @InjectMocks
-  CardService cardService;
+    @InjectMocks
+    CardService cardService;
 
-  @BeforeEach
-  void setup() {
-    MockitoAnnotations.openMocks(this);
-  }
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-  @Test
-  void listAllReturnsValuesCorrect() {
-    List<CardEntity> cardEntities = loadFakeCardEntities();
-    when(this.cardRepository.findAll()).thenReturn(cardEntities);
+    @Test
+    void listAllReturnsValuesCorrect() {
+        List<CardEntity> cardEntities = loadFakeCardEntities();
+        when(this.cardRepository.findAll()).thenReturn(cardEntities);
 
-    List<ShowCardDto> result = cardService.listAll();
+        List<ShowCardResponse> result = cardService.listAll();
 
-    assertEquals(2, result.size());
-  }
+        assertEquals(2, result.size());
+    }
 
-  @Test
-  void listAllReturnsZeroWhenNotFindData() {
-    when(this.cardRepository.findAll()).thenReturn(List.of());
+    @Test
+    void listAllReturnsZeroWhenNotFindData() {
+        when(this.cardRepository.findAll()).thenReturn(List.of());
 
-    List<ShowCardDto> result = cardService.listAll();
+        List<ShowCardResponse> result = cardService.listAll();
 
-    assertEquals(0, result.size());
-  }
+        assertEquals(0, result.size());
+    }
 
-  @Test
-  void shouldReturnValueCorrectOnSaveValue() {
-    CardEntity cardEntityFaker = this.loadFakeCardEntity();
-    when(this.cardRepository.save(any(CardEntity.class))).thenReturn(cardEntityFaker);
+    @Test
+    void shouldReturnValueCorrectOnSaveValue() {
+        CardEntity cardEntityFaker = this.loadFakeCardEntity();
+        when(this.cardRepository.save(any(CardEntity.class))).thenReturn(cardEntityFaker);
 
-    ShowCardDto result = this.cardService.addCard(this.loadAddCardDto());
+        ShowCardResponse result = this.cardService.addCard(this.loadAddCardDto());
 
-    assertEquals(cardEntityFaker.getName(), result.getName());
-  }
+        assertEquals(cardEntityFaker.getName(), result.getName());
+    }
 
-  private AddCardDto loadAddCardDto() {
-    return AddCardDto.builder().name(faker.name().fullName())
-        .color(faker.color().hex())
-        .currentLimit(faker.number().randomDouble(10, 0, 100))
-        .flag(faker.random().toString())
-        .dueDate(faker.date().toString())
-        .closeDate(faker.date().toString())
-        .type(CardTypesEnum.CREDIT.toString())
-        .build();
-  }
+    private AddCardRequest loadAddCardDto() {
+        return AddCardRequest.builder().name(faker.name().fullName())
+                .color(faker.color().hex())
+                .currentLimit(faker.number().randomDouble(10, 0, 100))
+                .flag(faker.random().toString())
+                .dueDate(faker.date().toString())
+                .closeDate(faker.date().toString())
+                .type(CardTypesEnum.CREDIT.toString())
+                .build();
+    }
 
-  private List<CardEntity> loadFakeCardEntities() {
+    private List<CardEntity> loadFakeCardEntities() {
 
-    CardEntity cardEntityOne = this.loadFakeCardEntity();
-    CardEntity cardEntityTwo = this.loadFakeCardEntity();
+        CardEntity cardEntityOne = this.loadFakeCardEntity();
+        CardEntity cardEntityTwo = this.loadFakeCardEntity();
 
-    return List.of(cardEntityOne, cardEntityTwo);
-  }
+        return List.of(cardEntityOne, cardEntityTwo);
+    }
 
-  private CardEntity loadFakeCardEntity() {
+    private CardEntity loadFakeCardEntity() {
 
-    return CardEntity.builder()
-        .uuid(faker.idNumber().toString())
-        .name(faker.name().fullName())
-        .color(faker.color().hex())
-        .currentLimit(faker.number().randomDouble(10, 0, 100))
-        .flag(faker.random().toString())
-        .dueDate(faker.date().toString())
-        .closeDate(faker.date().toString())
-        .type(CardTypesEnum.CREDIT.toString())
-        .build();
-  }
+        return CardEntity.builder()
+                .uuid(faker.idNumber().toString())
+                .name(faker.name().fullName())
+                .color(faker.color().hex())
+                .currentLimit(faker.number().randomDouble(10, 0, 100))
+                .flag(faker.random().toString())
+                .dueDate(faker.date().toString())
+                .closeDate(faker.date().toString())
+                .type(CardTypesEnum.CREDIT.toString())
+                .build();
+    }
 }
