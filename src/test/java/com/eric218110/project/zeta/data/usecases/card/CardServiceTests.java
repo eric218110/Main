@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 
 import com.eric218110.project.zeta.data.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.dto.card.AddCardDto;
@@ -26,8 +25,6 @@ class CardServiceTests {
 
   @Mock
   private CardRepository cardRepository;
-  @Mock
-  private ModelMapper modelMapper;
 
   @InjectMocks
   CardService cardService;
