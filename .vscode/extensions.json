@@ -5,6 +5,9 @@
         "shardulm94.trailing-spaces",
         "vscjava.vscode-java-pack",
         "sonarsource.sonarlint-vscode",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "vscjava.vscode-lombok",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
     ]
 }
