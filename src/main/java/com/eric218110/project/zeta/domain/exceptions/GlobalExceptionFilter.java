@@ -15,7 +15,7 @@ public class GlobalExceptionFilter {
   public ResponseEntity<ExceptionHandlerDetails> handleResponseStatusException(
       ResponseStatusException responseStatusException) {
     Map<String, String> errorDetails = new HashMap<>();
-    errorDetails.put("message", responseStatusException.getMessage());
+    errorDetails.put("message", responseStatusException.getReason());
 
     HttpStatusCode statusCode = responseStatusException.getStatusCode();
 

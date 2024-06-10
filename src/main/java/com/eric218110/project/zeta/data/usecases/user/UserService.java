@@ -31,16 +31,24 @@ public class UserService implements AddUser {
   public AddUserResponse onAddUser(AddUserRequestBody addUserRequestBody) {
 
     Optional<RoleEntity> loadRoleEntity = this.roleRepository.findByName(RoleEnum.USER.name());
+    Optional<UserEntity> loadUserByUsername =
+        this.userRepository.findByUsername(addUserRequestBody.getUsername());
 
     if (loadRoleEntity.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
           "Not possible create user, role is not present");
     }
 
+    if (loadUserByUsername.isPresent()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Not possible create user, user already exists");
+    }
+
     Set<RoleEntity> roles = new HashSet<>();
     roles.add(loadRoleEntity.get());
 
     String passwordEncoded = this.encodedProvider.onEncodeByValue(addUserRequestBody.getPassword());
+
     UserEntity userEntityToSave = UserEntity.builder().roles(roles)
         .username(addUserRequestBody.getUsername()).password(passwordEncoded).build();
 
