@@ -8,16 +8,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eric218110.project.zeta.domain.http.login.LoginUserBodyRequest;
 import com.eric218110.project.zeta.domain.http.login.LoginUserResponse;
+import com.eric218110.project.zeta.domain.usecases.authorization.AuthUserByUsernameAndPassword;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("auth")
 public class AuthenticationController {
 
+  private final AuthUserByUsernameAndPassword authUserByUsernameAndPasswordService;
+
   @PostMapping("/login")
   public ResponseEntity<LoginUserResponse> loginUser(@RequestBody @Valid LoginUserBodyRequest loginUserBody) {
-    return ResponseEntity.ok(new LoginUserResponse(""));
+    LoginUserResponse loginUserResponse = this.authUserByUsernameAndPasswordService.onAuthorizeUser(loginUserBody);
+
+    return ResponseEntity.ok(loginUserResponse);
   }
 
 }
