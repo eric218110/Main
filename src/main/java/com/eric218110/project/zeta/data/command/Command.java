@@ -32,19 +32,23 @@ public class Command implements CommandLineRunner {
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-    RoleEntity roleEntity = RoleEntity.builder().name(RoleEnum.ADMIN.name()).build();
+    RoleEntity roleAdmin = RoleEntity.builder().name(RoleEnum.ADMIN.name()).build();
+    RoleEntity roleUser = RoleEntity.builder().name(RoleEnum.USER.name()).build();
 
     String password = this.encodedProvider.onEncodeByValue("123");
     UserEntity userEntity = UserEntity.builder().username("admin").password(password).build();
 
-    var role = this.roleRepository.findByName(RoleEnum.ADMIN.name());
+    var loadRoleAdmin = this.roleRepository.findByName(RoleEnum.ADMIN.name());
+    var loadRoleUser = this.roleRepository.findByName(RoleEnum.USER.name());
     var userAdmin = this.userRepository.findByUsername(userEntity.getUsername());
 
-    role.ifPresentOrElse(roleIsPresent -> log.info("skip create role ADIM"),
-        () -> this.roleRepository.save(roleEntity));
+    loadRoleAdmin.ifPresentOrElse(roleIsPresent -> {
+    }, () -> this.roleRepository.save(roleAdmin));
+    loadRoleUser.ifPresentOrElse(roleIsPresent -> {
+    }, () -> this.roleRepository.save(roleUser));
 
-    userAdmin.ifPresentOrElse(userIsPresent -> log.info("skip create User Admin"),
-        () -> this.userRepository.save(userEntity));
+    userAdmin.ifPresentOrElse(userIsPresent -> {
+    }, () -> this.userRepository.save(userEntity));
 
   }
 

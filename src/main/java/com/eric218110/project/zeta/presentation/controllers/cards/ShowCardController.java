@@ -10,8 +10,8 @@ import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("cards")
 @RequiredArgsConstructor
+@RequestMapping("cards")
 public class ShowCardController {
 
   final LoadAllCards loadAllCards;
