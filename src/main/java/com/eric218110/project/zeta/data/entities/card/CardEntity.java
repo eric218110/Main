@@ -1,11 +1,8 @@
 package com.eric218110.project.zeta.data.entities.card;
 
 import java.time.Instant;
-
 import org.hibernate.annotations.CreationTimestamp;
-
 import com.eric218110.project.zeta.data.entities.user.UserEntity;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

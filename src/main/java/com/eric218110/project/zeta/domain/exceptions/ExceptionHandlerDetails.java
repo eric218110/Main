@@ -2,7 +2,6 @@ package com.eric218110.project.zeta.domain.exceptions;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +9,7 @@ import lombok.Data;
 @Builder
 public class ExceptionHandlerDetails {
   LocalDateTime timestamp;
-  int status;
+  String status;
   String title;
   Map<String, String> details;
   String developMessage;

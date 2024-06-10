@@ -3,7 +3,6 @@ package com.eric218110.project.zeta.domain.exceptions;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,14 +19,9 @@ public class RestNoResourceFound {
         noResourceFoundException.getResourcePath());
     errorDetails.put("message", message);
 
-    return new ResponseEntity<>(
-        ExceptionHandlerDetails.builder()
-            .status(HttpStatus.BAD_REQUEST.value())
-            .timestamp(LocalDateTime.now())
-            .title("Not found")
-            .developMessage(noResourceFoundException.getClass().getName())
-            .details(errorDetails)
-            .build(),
-        HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(ExceptionHandlerDetails.builder()
+        .status(HttpStatus.BAD_REQUEST.toString()).timestamp(LocalDateTime.now()).title("Not found")
+        .developMessage(noResourceFoundException.getClass().getName()).details(errorDetails)
+        .build(), HttpStatus.BAD_REQUEST);
   }
 }

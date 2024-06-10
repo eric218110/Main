@@ -2,13 +2,11 @@ package com.eric218110.project.zeta.infra.providers.encoded.encode;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Service;
-
 import com.eric218110.project.zeta.data.provider.encoded.EncodedProvider;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -27,7 +25,8 @@ public class EncodedProviderService implements EncodedProvider {
   }
 
   @Override
-  public String generateTokenValueByClaims(JwtClaimsSet claims, RSAPublicKey publicKey, RSAPrivateKey privateKey) {
+  public String generateTokenValueByClaims(JwtClaimsSet claims, RSAPublicKey publicKey,
+      RSAPrivateKey privateKey) {
 
     JWK jwk = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
     ImmutableJWKSet<SecurityContext> jwkSet = new ImmutableJWKSet<>(new JWKSet(jwk));
