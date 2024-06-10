@@ -16,10 +16,8 @@ import com.eric218110.project.zeta.data.provider.encoded.EncodedProvider;
 import com.eric218110.project.zeta.data.provider.token.TokenProvider;
 import com.eric218110.project.zeta.domain.http.login.LoginUserBodyRequest;
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
-import com.github.javafaker.Faker;
 
 class AuthorizationServiceTests {
-  private Faker faker = new Faker();
 
   @Mock
   private UserRepository userRepository;

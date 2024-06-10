@@ -26,7 +26,8 @@ public class SecurityConfigurations implements WebSecurityConfigurations {
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
     httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authorize -> authorize
-        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll().anyRequest().authenticated())
+        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+        .requestMatchers(HttpMethod.POST, "user/create").permitAll().anyRequest().authenticated())
         .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())).sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
