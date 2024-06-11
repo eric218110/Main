@@ -13,11 +13,9 @@ import com.eric218110.project.zeta.infra.repositories.database.role.RoleReposito
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Configuration
 @RequiredArgsConstructor
-@Log4j2
 public class Command implements CommandLineRunner {
 
   private final UserRepository userRepository;

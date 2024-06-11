@@ -1,12 +1,13 @@
 package com.eric218110.project.zeta.presentation.controllers.cards;
 
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
 import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.domain.usecases.card.AddOneCard;
@@ -21,15 +22,13 @@ public class AddCardController {
   private final AddOneCard addOneCard;
 
   @PostMapping
-  public ResponseEntity<ShowCardResponse> save(@Valid @RequestBody AddCardRequest addCardDto) {
-    try {
-      ShowCardResponse cardAdd = this.addOneCard.addCard(addCardDto);
+  public ResponseEntity<ShowCardResponse> save(@Valid @RequestBody AddCardRequest addCardDto,
+      JwtAuthenticationToken jwtAuthenticationToken) {
 
-      return ResponseEntity.status(HttpStatus.CREATED).body(cardAdd);
-    } catch (Exception e) {
-      throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
-          "Invalid request, fix values and try again");
-    }
+    UUID userUuid = UUID.fromString(jwtAuthenticationToken.getName());
+    ShowCardResponse cardAdd = this.addOneCard.addCard(addCardDto, userUuid);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(cardAdd);
   }
 
 }

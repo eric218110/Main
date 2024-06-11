@@ -1,7 +1,9 @@
 package com.eric218110.project.zeta.presentation.controllers.cards;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +19,11 @@ public class ShowCardController {
   final LoadAllCards loadAllCards;
 
   @GetMapping("show")
-  public ResponseEntity<List<ShowCardResponse>> show() {
-    List<ShowCardResponse> listCards = this.loadAllCards.listAll();
+  public ResponseEntity<List<ShowCardResponse>> show(
+      JwtAuthenticationToken jwtAuthenticationToken) {
+
+    UUID userUuid = UUID.fromString(jwtAuthenticationToken.getName());
+    List<ShowCardResponse> listCards = this.loadAllCards.listAllByUserUuid(userUuid);
 
     return ResponseEntity.ok(listCards);
   }
