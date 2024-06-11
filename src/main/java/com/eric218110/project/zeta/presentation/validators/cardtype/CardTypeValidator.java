@@ -1,7 +1,7 @@
-package com.eric218110.project.zeta.validators.cardtype;
+package com.eric218110.project.zeta.presentation.validators.cardtype;
 
 import java.util.Arrays;
-import com.eric218110.project.zeta.validators.enums.CardTypeValidatorEnum;
+import com.eric218110.project.zeta.presentation.validators.enums.CardTypeValidatorEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

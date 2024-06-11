@@ -1,7 +1,7 @@
 package com.eric218110.project.zeta.domain.http.card;
 
 import com.eric218110.project.zeta.domain.enums.cardtype.CardTypesEnum;
-import com.eric218110.project.zeta.validators.enums.CardTypeValidatorEnum;
+import com.eric218110.project.zeta.presentation.validators.enums.CardTypeValidatorEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
