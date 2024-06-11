@@ -15,6 +15,8 @@ import com.eric218110.project.zeta.domain.enums.role.RoleEnum;
 import com.eric218110.project.zeta.domain.http.user.AddUserRequestBody;
 import com.eric218110.project.zeta.domain.http.user.AddUserResponse;
 import com.eric218110.project.zeta.domain.usecases.user.AddUser;
+import com.eric218110.project.zeta.domain.usecases.validator.email.EmailValidator;
+import com.eric218110.project.zeta.domain.usecases.validator.password.PasswordValidator;
 import com.eric218110.project.zeta.infra.repositories.database.role.RoleRepository;
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +28,21 @@ public class UserService implements AddUser {
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final EncodedProvider encodedProvider;
+  private final PasswordValidator passwordValidator;
+  private final EmailValidator emailValidator;
 
   @Override
   public AddUserResponse onAddUser(AddUserRequestBody addUserRequestBody) {
+
+    var passwordIsValid =
+        this.passwordValidator.onValidatePassword(addUserRequestBody.getPassword());
+
+    var emailIsValid = this.emailValidator.onValidateEmail(addUserRequestBody.getUsername());
+
+    if (!passwordIsValid || !emailIsValid) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Not possible create user, password or email is invalid");
+    }
 
     Optional<RoleEntity> loadRoleEntity = this.roleRepository.findByName(RoleEnum.USER.name());
     Optional<UserEntity> loadUserByUsername =
