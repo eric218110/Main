@@ -1,8 +1,8 @@
-package com.eric218110.project.zeta.data.entities.user;
+package com.eric218110.project.zeta.domain.entities.user;
 
 import java.util.Set;
 import java.util.UUID;
-import com.eric218110.project.zeta.data.entities.role.RoleEntity;
+import com.eric218110.project.zeta.domain.entities.role.RoleEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -3,7 +3,7 @@ package com.eric218110.project.zeta.data.usecases.authorization;
 import java.time.Instant;
 import java.util.Optional;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import com.eric218110.project.zeta.data.entities.user.UserEntity;
+import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import com.eric218110.project.zeta.domain.http.login.LoginUserBodyRequest;
 import com.eric218110.project.zeta.domain.http.login.LoginUserResponse;
 import com.github.javafaker.Faker;

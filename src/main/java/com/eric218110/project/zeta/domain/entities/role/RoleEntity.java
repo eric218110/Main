@@ -1,4 +1,4 @@
-package com.eric218110.project.zeta.data.entities.role;
+package com.eric218110.project.zeta.domain.entities.role;
 
 import java.util.UUID;
 import jakarta.persistence.Column;

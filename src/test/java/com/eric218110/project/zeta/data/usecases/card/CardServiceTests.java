@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.eric218110.project.zeta.data.entities.card.CardEntity;
+import com.eric218110.project.zeta.domain.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
