@@ -1,8 +1,14 @@
 package com.eric218110.project.zeta.data.usecases.card;
 
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import com.eric218110.project.zeta.domain.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import com.eric218110.project.zeta.domain.enums.cardtype.CardTypesEnum;
@@ -22,12 +28,22 @@ public class CardServiceStub {
         .build();
   }
 
-  static List<CardEntity> loadFakeCardEntities() {
+  static Page<CardEntity> loadFakeCardEntities() {
 
     CardEntity cardEntityOne = CardServiceStub.loadFakeCardEntity();
-    CardEntity cardEntityTwo = CardServiceStub.loadFakeCardEntity();
 
-    return List.of(cardEntityOne, cardEntityTwo);
+    Pageable pageable = PageRequest.of(0, 2);
+    Page<CardEntity> page = new PageImpl<>(Collections.singletonList(cardEntityOne), pageable, 1);
+
+    return page;
+  }
+
+  static Page<CardEntity> loadFakeCardEntitiesEmpty() {
+
+    Pageable pageable = Pageable.unpaged();
+    Page<CardEntity> page = new PageImpl<>(Collections.emptyList(), pageable, 1);
+
+    return page;
   }
 
   static CardEntity loadFakeCardEntity() {

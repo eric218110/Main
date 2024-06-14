@@ -3,13 +3,17 @@ package com.eric218110.project.zeta.data.usecases.card;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import java.util.List;
+
 import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.eric218110.project.zeta.domain.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
@@ -36,23 +40,26 @@ class CardServiceTests {
 
   @Test
   void listAllReturnsValuesCorrect() {
-    List<CardEntity> cardEntities = CardServiceStub.loadFakeCardEntities();
-    when(this.cardRepository.findByUser(any())).thenReturn(cardEntities);
+    Page<CardEntity> cardEntities = CardServiceStub.loadFakeCardEntities();
+    when(this.cardRepository.findByUser(any(), any())).thenReturn(cardEntities);
     when(this.userRepository.findById(any())).thenReturn(CardServiceStub.loadUserEntity());
+    Pageable pageable = Pageable.unpaged();
 
-    List<ShowCardResponse> result = cardService.listAllByUserUuid(UUID.randomUUID());
+    var result = cardService.listAllByUserUuid(UUID.randomUUID(), pageable);
 
-    assertEquals(2, result.size());
+    assertEquals(2, result.getSize());
   }
 
   @Test
   void listAllReturnsZeroWhenNotFindData() {
-    when(this.cardRepository.findAll()).thenReturn(List.of());
+    Page<CardEntity> cardEntities = CardServiceStub.loadFakeCardEntitiesEmpty();
+    when(this.cardRepository.findByUser(any(), any())).thenReturn(cardEntities);
     when(this.userRepository.findById(any())).thenReturn(CardServiceStub.loadUserEntity());
+    Pageable pageable = Pageable.unpaged();
 
-    List<ShowCardResponse> result = cardService.listAllByUserUuid(UUID.randomUUID());
+    var result = cardService.listAllByUserUuid(UUID.randomUUID(), pageable);
 
-    assertEquals(0, result.size());
+    assertEquals(0, result.getSize());
   }
 
   @Test

@@ -1,12 +1,14 @@
 package com.eric218110.project.zeta.data.usecases.card;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 import com.eric218110.project.zeta.domain.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
@@ -15,6 +17,7 @@ import com.eric218110.project.zeta.domain.usecases.card.AddOneCard;
 import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -24,11 +27,11 @@ public class CardService implements LoadAllCards, AddOneCard {
   private final UserRepository userRepository;
 
   @Override
-  public List<ShowCardResponse> listAllByUserUuid(UUID userIUuid) {
+  public Page<ShowCardResponse> listAllByUserUuid(UUID userIUuid, Pageable pageable) {
     UserEntity userEntity = this.loadUserByUuid(userIUuid);
-    List<CardEntity> cardEntities = this.cardRepository.findByUser(userEntity);
+    Page<CardEntity> cardEntities = this.cardRepository.findByUser(userEntity, pageable);
 
-    return cardEntities.stream().map(this::entityToDto).collect(Collectors.toList());
+    return cardEntities.map(this::entityToDto);
   }
 
   @Override
