@@ -1,0 +1,62 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "explorer.compactFolders": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "[java]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "redhat.java",
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    },
+  },
+  "[xml]": {
+    "editor.autoClosingBrackets": "never",
+    "files.trimFinalNewlines": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    },
+  },
+  "cSpell.words": [
+    "ADIM",
+    "cardtype",
+    "usecases"
+  ],
+  "sqltools.connections": [
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": true
+        }
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "postgress",
+      "connectString": "postgresql://eric218110:p9Dnk5qLVjFK@ep-summer-sun-103700.us-east-2.aws.neon.tech/projectzeta?sslmode=require"
+    },
+    {
+      "pgOptions": {
+        "ssl": {
+          "rejectUnauthorized": true
+        }
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "name": "QA",
+      "connectString": "postgres://projectzeta_database_user:ZCiD03U61UpE8QJoV5F5LotnQkWsirs5@dpg-cpk9cjkf7o1s73cl6ang-a.oregon-postgres.render.com/projectzeta_database"
+    }
+  ],
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+}

@@ -33,3 +33,4 @@ build/
 .vscode/settings.json
 .vscode/launch.json
 !.vscode/settings.example.json
+!.vscode/settings.json
