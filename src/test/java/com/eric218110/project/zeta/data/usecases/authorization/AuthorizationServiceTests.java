@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.web.server.ResponseStatusException;
 import com.eric218110.project.zeta.data.provider.encoded.EncodedProvider;
@@ -25,6 +26,8 @@ class AuthorizationServiceTests {
   private EncodedProvider encodedProvider;
   @Mock
   private TokenProvider<JwtClaimsSet> tokenProvider;
+  @Mock
+  private ModelMapper modelMapper;
 
   @InjectMocks
   AuthorizationService authorizationService;

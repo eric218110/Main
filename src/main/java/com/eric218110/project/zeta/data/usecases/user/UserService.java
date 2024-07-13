@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,6 +31,7 @@ public class UserService implements AddUser {
   private final EncodedProvider encodedProvider;
   private final PasswordValidator passwordValidator;
   private final EmailValidator emailValidator;
+  private final ModelMapper modelMapper;
 
   @Override
   public AddUserResponse onAddUser(AddUserRequestBody addUserRequestBody) {
@@ -63,17 +65,19 @@ public class UserService implements AddUser {
 
     String passwordEncoded = this.encodedProvider.onEncodeByValue(addUserRequestBody.getPassword());
 
-    UserEntity userEntityToSave = UserEntity.builder().roles(roles)
-        .username(addUserRequestBody.getUsername()).password(passwordEncoded).build();
+    UserEntity userEntityToSave = modelMapper.map(addUserRequestBody, UserEntity.class);
+    userEntityToSave.setPassword(passwordEncoded);
 
     UserEntity userSaved = this.userRepository.save(userEntityToSave);
 
     List<String> userRoles =
         userEntityToSave.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toList());
 
-    return AddUserResponse.builder().roles(userRoles).uuid(userSaved.getUserId())
-        .username(userSaved.getUsername()).build();
 
+    var addUserResponse = modelMapper.map(userSaved, AddUserResponse.class);
+    addUserResponse.setRoles(userRoles);
+
+    return addUserResponse;
   }
 
 }

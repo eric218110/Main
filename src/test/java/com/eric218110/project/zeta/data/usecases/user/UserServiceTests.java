@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import com.eric218110.project.zeta.data.provider.encoded.EncodedProvider;
@@ -34,6 +35,8 @@ class UserServiceTests {
   private PasswordValidator passwordValidator;
   @Mock
   private EmailValidator emailValidator;
+  @Mock
+  private ModelMapper modelMapper;
 
   @InjectMocks
   UserService userService;

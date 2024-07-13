@@ -34,6 +34,9 @@ public class UserEntity {
   @Column(unique = true)
   private String username;
 
+  @Column()
+  private String name;
+
   private String password;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -3,6 +3,7 @@ package com.eric218110.project.zeta.data.usecases.authorization;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -24,6 +25,7 @@ public class AuthorizationService implements AuthUserByUsernameAndPassword {
   private final UserRepository userRepository;
   private final EncodedProvider encodedProvider;
   private final TokenProvider<JwtClaimsSet> tokenProvider;
+  private final ModelMapper modelMapper;
 
   @Value("${security.jwt.key.public}")
   private RSAPublicKey rsaPublicKey;
@@ -53,7 +55,10 @@ public class AuthorizationService implements AuthUserByUsernameAndPassword {
     String accessToken = this.encodedProvider.generateTokenValueByClaims(tokenClaims,
         this.rsaPublicKey, this.rsaPrivateKey);
 
-    return LoginUserResponse.builder().accessToken(accessToken).build();
+    LoginUserResponse loginUserResponse = modelMapper.map(userEntity, LoginUserResponse.class);
+    loginUserResponse.setAccessToken(accessToken);
+
+    return loginUserResponse;
   }
 
 }

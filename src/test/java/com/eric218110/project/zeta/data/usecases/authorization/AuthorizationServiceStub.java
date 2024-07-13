@@ -9,13 +9,13 @@ import com.eric218110.project.zeta.domain.http.login.LoginUserResponse;
 import com.github.javafaker.Faker;
 
 public class AuthorizationServiceStub {
-  static public Faker faker = new Faker();
+  static Faker faker = new Faker();
 
-  static public String makeAccessToken() {
+  static String makeAccessToken() {
     return AuthorizationServiceStub.faker.internet().uuid();
   }
 
-  static public JwtClaimsSet makeJwtClaimsSet() {
+  static JwtClaimsSet makeJwtClaimsSet() {
     long expiresIn = 500L;
     Instant now = Instant.now();
 
@@ -23,21 +23,23 @@ public class AuthorizationServiceStub {
         .issuedAt(now).build();
   }
 
-  static public Optional<UserEntity> makeUserEntity() {
+  static Optional<UserEntity> makeUserEntity() {
     return Optional
         .of(UserEntity.builder().username(AuthorizationServiceStub.faker.internet().emailAddress())
             .password(AuthorizationServiceStub.faker.internet().password()).build());
   }
 
-  static public LoginUserResponse makeLoginUserResponse() {
-    return LoginUserResponse.builder().accessToken("").build();
+  static LoginUserResponse makeLoginUserResponse() {
+    return makeLoginUserResponse("");
   }
 
-  static public LoginUserResponse makeLoginUserResponse(String accessToken) {
-    return LoginUserResponse.builder().accessToken(accessToken).build();
+  static LoginUserResponse makeLoginUserResponse(String accessToken) {
+    var loginUserResponse = new LoginUserResponse();
+    loginUserResponse.setAccessToken(accessToken);
+    return loginUserResponse;
   }
 
-  static public LoginUserBodyRequest makeLoginUserBodyRequest() {
+  static LoginUserBodyRequest makeLoginUserBodyRequest() {
     return LoginUserBodyRequest.builder()
         .username(AuthorizationServiceStub.faker.internet().emailAddress())
         .password(AuthorizationServiceStub.faker.internet().password()).build();
