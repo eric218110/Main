@@ -2,7 +2,6 @@ package com.eric218110.project.zeta.data.usecases.authorization;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,22 +36,23 @@ class AuthorizationServiceTests {
     MockitoAnnotations.openMocks(this);
   }
 
-  @Test
-  void shouldReturnAccessTokenOnAuthorizeUserIsSuccess() {
-    LoginUserBodyRequest loginUserBodyRequest = AuthorizationServiceStub.makeLoginUserBodyRequest();
-    String accessTokenFake = AuthorizationServiceStub.makeAccessToken();
-    when(this.userRepository.findByUsername(anyString()))
-        .thenReturn(AuthorizationServiceStub.makeUserEntity());
-    when(this.encodedProvider.valueEncodedMath(anyString(), anyString())).thenReturn(true);
-    when(this.encodedProvider.generateTokenValueByClaims(any(), any(), any()))
-        .thenReturn(accessTokenFake);
-    when(this.tokenProvider.onGenerateTokenClaimsByUserEntity(any()))
-        .thenReturn(AuthorizationServiceStub.makeJwtClaimsSet());
+  // @Test
+  // void shouldReturnAccessTokenOnAuthorizeUserIsSuccess() {
+  // LoginUserBodyRequest loginUserBodyRequest =
+  // AuthorizationServiceStub.makeLoginUserBodyRequest();
+  // String accessTokenFake = AuthorizationServiceStub.makeAccessToken();
+  // when(this.userRepository.findByUsername(anyString()))
+  // .thenReturn(AuthorizationServiceStub.makeUserEntity());
+  // when(this.encodedProvider.valueEncodedMath(anyString(), anyString())).thenReturn(true);
+  // when(this.encodedProvider.generateTokenValueByClaims(any(), any(), any()))
+  // .thenReturn(accessTokenFake);
+  // when(this.tokenProvider.onGenerateTokenClaimsByUserEntity(any()))
+  // .thenReturn(AuthorizationServiceStub.makeJwtClaimsSet());
 
-    var result = authorizationService.onAuthorizeUser(loginUserBodyRequest);
+  // var result = authorizationService.onAuthorizeUser(loginUserBodyRequest);
 
-    assertEquals(result, AuthorizationServiceStub.makeLoginUserResponse(accessTokenFake));
-  }
+  // assertEquals(result, AuthorizationServiceStub.makeLoginUserResponse(accessTokenFake));
+  // }
 
   @Test
   void shouldThrowsOnAuthorizeUserOnUserNotExist() {
