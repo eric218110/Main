@@ -67,17 +67,16 @@ public class UserService implements AddUser {
 
     UserEntity userEntityToSave = modelMapper.map(addUserRequestBody, UserEntity.class);
     userEntityToSave.setPassword(passwordEncoded);
+    userEntityToSave.setRoles(roles);
 
     UserEntity userSaved = this.userRepository.save(userEntityToSave);
 
     List<String> userRoles =
         userEntityToSave.getRoles().stream().map(RoleEntity::getName).collect(Collectors.toList());
 
+    return AddUserResponse.builder().uuid(userSaved.getUserId()).username(userSaved.getUsername())
+        .roles(userRoles).build();
 
-    var addUserResponse = modelMapper.map(userSaved, AddUserResponse.class);
-    addUserResponse.setRoles(userRoles);
-
-    return addUserResponse;
   }
 
 }

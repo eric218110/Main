@@ -41,8 +41,8 @@
       "previewLimit": 50,
       "server": "localhost",
       "driver": "PostgreSQL",
-      "name": "postgress",
-      "connectString": "postgresql://eric218110:p9Dnk5qLVjFK@ep-summer-sun-103700.us-east-2.aws.neon.tech/projectzeta?sslmode=require"
+      "name": "QA",
+      "connectString": "postgres://projectzeta_database_user:ZCiD03U61UpE8QJoV5F5LotnQkWsirs5@dpg-cpk9cjkf7o1s73cl6ang-a.oregon-postgres.render.com/projectzeta_database"
     },
     {
       "pgOptions": {
@@ -53,8 +53,8 @@
       "previewLimit": 50,
       "server": "localhost",
       "driver": "PostgreSQL",
-      "name": "QA",
-      "connectString": "postgres://projectzeta_database_user:ZCiD03U61UpE8QJoV5F5LotnQkWsirs5@dpg-cpk9cjkf7o1s73cl6ang-a.oregon-postgres.render.com/projectzeta_database"
+      "name": "Neon console",
+      "connectString": "postgresql://eric218110:p9Dnk5qLVjFK@ep-summer-sun-103700.us-east-2.aws.neon.tech/projectzeta?sslmode=require"
     }
   ],
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable",
