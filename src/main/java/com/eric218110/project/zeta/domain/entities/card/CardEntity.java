@@ -1,6 +1,7 @@
 package com.eric218110.project.zeta.domain.entities.card;
 
 import java.time.Instant;
+import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import jakarta.persistence.Entity;
@@ -24,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class CardEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private String uuid;
+  private UUID uuid;
 
   private String name;
   private String color;

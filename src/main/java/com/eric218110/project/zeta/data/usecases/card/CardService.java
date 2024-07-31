@@ -2,13 +2,11 @@ package com.eric218110.project.zeta.data.usecases.card;
 
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
 import com.eric218110.project.zeta.domain.entities.card.CardEntity;
 import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import com.eric218110.project.zeta.domain.http.card.AddCardRequest;
@@ -17,7 +15,6 @@ import com.eric218110.project.zeta.domain.usecases.card.AddOneCard;
 import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
 import com.eric218110.project.zeta.infra.repositories.database.card.CardRepository;
 import com.eric218110.project.zeta.infra.repositories.database.user.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -62,9 +59,10 @@ public class CardService implements LoadAllCards, AddOneCard {
   }
 
   private ShowCardResponse entityToDto(CardEntity cardEntity) {
-    return ShowCardResponse.builder().uuid(cardEntity.getUuid()).name(cardEntity.getName())
-        .color(cardEntity.getColor()).currentLimit(cardEntity.getCurrentLimit())
-        .flag(cardEntity.getFlag()).dueDate(cardEntity.getDueDate())
-        .closeDate(cardEntity.getCloseDate()).type(cardEntity.getType()).build();
+    return ShowCardResponse.builder().uuid(cardEntity.getUuid().toString())
+        .name(cardEntity.getName()).color(cardEntity.getColor())
+        .currentLimit(cardEntity.getCurrentLimit()).flag(cardEntity.getFlag())
+        .dueDate(cardEntity.getDueDate()).closeDate(cardEntity.getCloseDate())
+        .type(cardEntity.getType()).build();
   }
 }

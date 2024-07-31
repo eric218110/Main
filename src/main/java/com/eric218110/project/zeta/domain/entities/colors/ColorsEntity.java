@@ -1,6 +1,7 @@
 package com.eric218110.project.zeta.domain.entities.colors;
 
 import java.time.Instant;
+import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +24,7 @@ public class ColorsEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "color_id")
-  private String uuid;
+  private UUID uuid;
 
   private String name;
 

@@ -2,6 +2,7 @@ package com.eric218110.project.zeta.domain.entities.account;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import com.eric218110.project.zeta.domain.entities.account_type.AccountTypeEntity;
 import com.eric218110.project.zeta.domain.entities.colors.ColorsEntity;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 public class AccountEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  private String uuid;
+  private UUID uuid;
 
   @ManyToOne
   @JoinColumn(name = "institution_id")

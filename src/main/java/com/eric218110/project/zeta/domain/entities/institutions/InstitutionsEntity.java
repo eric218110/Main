@@ -1,6 +1,7 @@
 package com.eric218110.project.zeta.domain.entities.institutions;
 
 import java.time.Instant;
+import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,12 +24,11 @@ public class InstitutionsEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   @Column(name = "institution_id")
-  private String uuid;
+  private UUID uuid;
 
   private String ispb;
   private String name;
   private double code;
-  private String flag;
   private String fullName;
 
   @CreationTimestamp
