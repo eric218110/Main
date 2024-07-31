@@ -29,21 +29,10 @@
   "cSpell.words": [
     "ADIM",
     "cardtype",
+    "ispb",
     "usecases"
   ],
   "sqltools.connections": [
-    {
-      "pgOptions": {
-        "ssl": {
-          "rejectUnauthorized": true
-        }
-      },
-      "previewLimit": 50,
-      "server": "localhost",
-      "driver": "PostgreSQL",
-      "name": "QA",
-      "connectString": "postgres://projectzeta_database_user:ZCiD03U61UpE8QJoV5F5LotnQkWsirs5@dpg-cpk9cjkf7o1s73cl6ang-a.oregon-postgres.render.com/projectzeta_database"
-    },
     {
       "pgOptions": {
         "ssl": {
