@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import com.eric218110.project.zeta.domain.enums.role.RoleEnum;
 import com.eric218110.project.zeta.domain.http.user.AddUserRequestBody;
 import com.eric218110.project.zeta.domain.http.user.AddUserResponse;
 import com.eric218110.project.zeta.domain.usecases.user.AddUser;
+import com.eric218110.project.zeta.domain.usecases.user.LoadUserByUuid;
 import com.eric218110.project.zeta.domain.usecases.validator.email.EmailValidator;
 import com.eric218110.project.zeta.domain.usecases.validator.password.PasswordValidator;
 import com.eric218110.project.zeta.infra.repositories.database.role.RoleRepository;
@@ -24,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class UserService implements AddUser {
+public class UserService implements AddUser, LoadUserByUuid {
 
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
@@ -79,4 +81,14 @@ public class UserService implements AddUser {
 
   }
 
+  @Override
+  public UserEntity loadUserByUuid(UUID uuid) {
+    Optional<UserEntity> userEntity = this.userRepository.findById(uuid);
+
+    if (userEntity.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found user");
+    }
+
+    return userEntity.get();
+  }
 }
