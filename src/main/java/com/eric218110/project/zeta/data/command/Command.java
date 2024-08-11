@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import com.eric218110.project.zeta.data.provider.encoded.EncodedProvider;
+import com.eric218110.project.zeta.domain.entities.account_type.AccountTypeEntity;
 import com.eric218110.project.zeta.domain.entities.colors.ColorsEntity;
 import com.eric218110.project.zeta.domain.entities.institutions.InstitutionsEntity;
 import com.eric218110.project.zeta.domain.entities.role.RoleEntity;
@@ -14,6 +15,7 @@ import com.eric218110.project.zeta.domain.entities.user.UserEntity;
 import com.eric218110.project.zeta.domain.enums.role.RoleEnum;
 import com.eric218110.project.zeta.infra.http.providers.LoadAllBanksProvider;
 import com.eric218110.project.zeta.infra.http.response.BanksResponse;
+import com.eric218110.project.zeta.infra.repositories.database.account_type.AccountTypeRepository;
 import com.eric218110.project.zeta.infra.repositories.database.color.ColorRepository;
 import com.eric218110.project.zeta.infra.repositories.database.institution.InstitutionRepository;
 import com.eric218110.project.zeta.infra.repositories.database.role.RoleRepository;
@@ -31,19 +33,48 @@ public class Command implements CommandLineRunner {
   private final LoadAllBanksProvider loadAllBanksProvider;
   private final InstitutionRepository institutionRepository;
   private final ColorRepository colorRepository;
+  private final AccountTypeRepository accountTypeRepository;
 
   @Value("${security.jwt.key.public}")
   private RSAPublicKey rsaPublicKey;
   @Value("${security.jwt.key.private}")
   private RSAPrivateKey rsaPrivateKey;
+  @Value("${application.features.run.seed}")
+  private boolean enableRunSeed;
 
   @Override
   @Transactional
   public void run(String... args) throws Exception {
-    this.insertColors();
+    if (this.enableRunSeed) {
+      this.insertUser();
+      this.insertColors();
+      this.insertInstitutions();
+      this.addAccountTypes();
+    }
   }
 
-  void insertUser() {
+  private void addAccountTypes() {
+    var accountTypeList = List.of(
+        AccountTypeEntity.builder().name("Current account").key("current_account").build(),
+        AccountTypeEntity.builder().name("Savings account").key("savings_account").build(),
+        AccountTypeEntity.builder().name("Payment account").key("payment_account").build(),
+        AccountTypeEntity.builder().name("Salary account").key("salary_account").build(),
+        AccountTypeEntity.builder().name("University account").key("university_account").build(),
+        AccountTypeEntity.builder().name("Digital account").key("digital_account").build(),
+        AccountTypeEntity.builder().name("Account for minors").key("Account_for_minors").build(),
+        AccountTypeEntity.builder().name("Joint account").key("joint_account").build(),
+        AccountTypeEntity.builder().name("Bitcoin wallet").key("bitcoin_wallet").build());
+
+    accountTypeList.forEach(accountType -> {
+      var accountTypeAlreadyExists = this.accountTypeRepository.findByKey(accountType.getKey());
+
+      if (accountTypeAlreadyExists.isEmpty()) {
+        this.accountTypeRepository.save(accountType);
+      }
+    });
+  }
+
+  private void insertUser() {
     RoleEntity roleAdmin = RoleEntity.builder().name(RoleEnum.ADMIN.name()).build();
     RoleEntity roleUser = RoleEntity.builder().name(RoleEnum.USER.name()).build();
 
@@ -64,7 +95,7 @@ public class Command implements CommandLineRunner {
 
   }
 
-  void insertInstitutions() {
+  private void insertInstitutions() {
     var banks = this.loadAllBanksProvider.getAllBanks();
 
     banks.stream().forEach(bank -> {
@@ -77,14 +108,14 @@ public class Command implements CommandLineRunner {
     });
   }
 
-  InstitutionsEntity responseToEntity(BanksResponse banksResponse) {
+  private InstitutionsEntity responseToEntity(BanksResponse banksResponse) {
     var code = banksResponse.getCode() == null ? Integer.valueOf(-1) : banksResponse.getCode();
 
     return InstitutionsEntity.builder().ispb(banksResponse.getIspb()).name(banksResponse.getName())
         .code(code).fullName(banksResponse.getFullName()).build();
   }
 
-  void insertColors() {
+  private void insertColors() {
     var colors = List.of(
         ColorsEntity.builder().description("dark Surface").name("darkSurface").argb("0xFF0e0e12")
             .hex("#0e0e12").build(),

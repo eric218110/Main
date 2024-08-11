@@ -8,8 +8,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.eric218110.project.zeta.domain.http.card.ShowCardResponse;
-import com.eric218110.project.zeta.domain.usecases.card.LoadAllCards;
+import com.eric218110.project.zeta.domain.http.account.ShowAccountResponse;
+import com.eric218110.project.zeta.domain.usecases.account.LoadAllAccount;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -17,14 +17,13 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("account")
 public class ShowAccountController {
 
-  final LoadAllCards loadAllCards;
+  final LoadAllAccount loadAllAccount;
 
   @GetMapping("show")
-  public Page<ShowCardResponse> show(JwtAuthenticationToken jwtAuthenticationToken,
+  public Page<ShowAccountResponse> show(JwtAuthenticationToken jwtAuthenticationToken,
       @PageableDefault(page = 0, size = 5) Pageable pageable) {
 
     var userUuid = UUID.fromString(jwtAuthenticationToken.getName());
-    return this.loadAllCards.listAllByUserUuid(userUuid, pageable);
-
+    return this.loadAllAccount.listAllByUserUuid(userUuid, pageable);
   }
 }

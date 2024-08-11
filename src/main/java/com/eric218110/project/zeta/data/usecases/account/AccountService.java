@@ -12,6 +12,7 @@ import com.eric218110.project.zeta.domain.http.account.ShowAccountResponse;
 import com.eric218110.project.zeta.domain.usecases.account.AddOneAccount;
 import com.eric218110.project.zeta.domain.usecases.account.LoadAllAccount;
 import com.eric218110.project.zeta.domain.usecases.account.ShowAccountByAccountIdAndUserId;
+import com.eric218110.project.zeta.domain.usecases.account_type.LoadAccountTypeByUuid;
 import com.eric218110.project.zeta.domain.usecases.color.LoadColorByUuid;
 import com.eric218110.project.zeta.domain.usecases.institution.LoadInstitutionByUuid;
 import com.eric218110.project.zeta.domain.usecases.user.LoadUserByUuid;
@@ -26,6 +27,7 @@ public class AccountService
   private final LoadColorByUuid loadColorByUuidService;
   private final LoadInstitutionByUuid loadInstructionService;
   private final AccountRepository accountRepository;
+  private final LoadAccountTypeByUuid accountTypeService;
 
   @Override
   public ShowAccountResponse addAccount(AddAccountRequest addCardDto, UUID userUuid) {
@@ -33,15 +35,19 @@ public class AccountService
     var color = this.loadColorByUuidService.loadColorByUuid(addCardDto.getColorId());
     var institution =
         this.loadInstructionService.loadInstitutionByUuid(addCardDto.getInstitutionId());
+    var accountType = this.accountTypeService.loadAccountTypeByUuid(addCardDto.getAccountTypeId());
 
     var accountEntity = AccountEntity.builder().description(addCardDto.getDescription()).user(user)
-        .balance(addCardDto.getBalance()).color(color).institution(institution).build();
+        .balance(addCardDto.getBalance()).color(color).institution(institution).type(accountType)
+        .build();
 
     var accountToSave = this.accountRepository.save(accountEntity);
 
     return ShowAccountResponse.builder().description(accountToSave.getDescription())
-        .balance(accountToSave.getBalance()).color(accountToSave.getColor())
-        .institution(accountToSave.getInstitution()).build();
+        .balance(accountToSave.getBalance()).uuid(accountToSave.getUuid())
+        .type(accountToSave.getType()).color(accountToSave.getColor())
+        .institution(accountToSave.getInstitution())
+        .creationTimestamp(accountToSave.getCreationTimestamp()).build();
   }
 
   @Override
@@ -53,7 +59,11 @@ public class AccountService
   }
 
   private ShowAccountResponse entityToDto(AccountEntity accountEntity) {
-    return ShowAccountResponse.builder().build();
+    return ShowAccountResponse.builder().description(accountEntity.getDescription())
+        .balance(accountEntity.getBalance()).uuid(accountEntity.getUuid())
+        .type(accountEntity.getType()).color(accountEntity.getColor())
+        .institution(accountEntity.getInstitution())
+        .creationTimestamp(accountEntity.getCreationTimestamp()).build();
   }
 
   @Override

@@ -28,6 +28,8 @@ public class AccountTypeEntity {
 
   private String name;
 
+  private String key;
+
   @CreationTimestamp
   private Instant creationTimestamp;
 
