@@ -17,6 +17,7 @@ public class ShowAccountResponse {
   private InstitutionsEntity institution;
   private AccountTypeEntity type;
   private ColorsEntity color;
+  private ColorsEntity background;
   private BigDecimal balance;
   private Instant creationTimestamp;
 }

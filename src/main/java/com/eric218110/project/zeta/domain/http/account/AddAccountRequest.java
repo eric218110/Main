@@ -23,4 +23,7 @@ public class AddAccountRequest {
 
   @NotBlank(message = "Field colorId is required")
   String colorId;
+
+  @NotBlank(message = "Field backgroundId is required")
+  String backgroundId;
 }

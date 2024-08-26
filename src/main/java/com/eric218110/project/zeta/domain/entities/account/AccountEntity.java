@@ -46,6 +46,10 @@ public class AccountEntity {
   private ColorsEntity color;
 
   @ManyToOne
+  @JoinColumn(name = "background_id")
+  private ColorsEntity background;
+
+  @ManyToOne
   @JoinColumn(name = "user_id")
   private UserEntity user;
 

@@ -33,20 +33,21 @@ public class AccountService
   public ShowAccountResponse addAccount(AddAccountRequest addCardDto, UUID userUuid) {
     var user = this.loadUserByUuidService.loadUserByUuid(userUuid);
     var color = this.loadColorByUuidService.loadColorByUuid(addCardDto.getColorId());
+    var background = this.loadColorByUuidService.loadColorByUuid(addCardDto.getBackgroundId());
     var institution =
         this.loadInstructionService.loadInstitutionByUuid(addCardDto.getInstitutionId());
     var accountType = this.accountTypeService.loadAccountTypeByUuid(addCardDto.getAccountTypeId());
 
     var accountEntity = AccountEntity.builder().description(addCardDto.getDescription()).user(user)
         .balance(addCardDto.getBalance()).color(color).institution(institution).type(accountType)
-        .build();
+        .background(background).build();
 
     var accountToSave = this.accountRepository.save(accountEntity);
 
     return ShowAccountResponse.builder().description(accountToSave.getDescription())
         .balance(accountToSave.getBalance()).uuid(accountToSave.getUuid())
         .type(accountToSave.getType()).color(accountToSave.getColor())
-        .institution(accountToSave.getInstitution())
+        .background(accountToSave.getBackground()).institution(accountToSave.getInstitution())
         .creationTimestamp(accountToSave.getCreationTimestamp()).build();
   }
 
@@ -62,7 +63,7 @@ public class AccountService
     return ShowAccountResponse.builder().description(accountEntity.getDescription())
         .balance(accountEntity.getBalance()).uuid(accountEntity.getUuid())
         .type(accountEntity.getType()).color(accountEntity.getColor())
-        .institution(accountEntity.getInstitution())
+        .institution(accountEntity.getInstitution()).background(accountEntity.getBackground())
         .creationTimestamp(accountEntity.getCreationTimestamp()).build();
   }
 
